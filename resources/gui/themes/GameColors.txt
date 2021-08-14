@@ -1,0 +1,9 @@
+Theme
+
+color:PlayerTile: $blue;
+color:MirrorTile: $cyan;
+color:SliderTile: $green;
+color:PushableTile: $yellow;
+color:SlipTile: $orange;
+color:SwitchTile: $red;
+
