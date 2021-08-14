@@ -1,0 +1,19 @@
+GUI;
+
+{Menu(Game):
+	
+	elements:[
+		{RenderInterface(renderer, 0, 0, 0, 0):
+			
+		}
+		
+		{Button(resetButton, 5, 5, 50, 20):
+			alignment:Bottom-Left;
+			font:secondary;
+			
+			text:reset;
+			
+			onClick:GUIReset;
+		}
+	]
+}
