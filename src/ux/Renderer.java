@@ -13,21 +13,14 @@ import java.util.Set;
 
 public class Renderer {
 	
+	public static boolean renderSegments = true, renderRays = true, renderPoly;
+	
 	public static void render(GraphicsWrapper graphics) {
 		if (!GameData.initialized) return;
 		
 		Set<WallEndpoint> drawnPoints = new HashSet<>();
 		
 		GameData.sortEndpoints();
-		
-		//drawing walls
-		for (WallEndpoint endpoint : GameData.wallEndpoints) {
-			if (drawnPoints.contains(endpoint)) continue;
-			
-			drawnPoints.add(endpoint.pair);
-			
-			graphics.drawLine((int) endpoint.x, (int) endpoint.y, (int) endpoint.pair.x, (int) endpoint.pair.y);
-		}
 		
 		//ray-casting
 		Set<WallEndpoint> intersectableSegments = new HashSet<>();
@@ -66,27 +59,42 @@ public class Renderer {
 					(int) (GameData.playerPos.y + Math.sin(angle) * dist2)));
 		}
 		
+		//drawing walls
+		if (renderSegments) {
+			for (WallEndpoint endpoint : GameData.wallEndpoints) {
+				if (drawnPoints.contains(endpoint)) continue;
+				
+				drawnPoints.add(endpoint.pair);
+				
+				graphics.drawLine((int) endpoint.x, (int) endpoint.y, (int) endpoint.pair.x, (int) endpoint.pair.y);
+			}
+		}
+		
 		//drawing ray-casted polygon
-//		for (int i = 0; i < resultPolygon.size()-1; i++) {
-//			graphics.drawLine(
-//					resultPolygon.get(i).x,
-//					resultPolygon.get(i).y,
-//					resultPolygon.get(i+1).x,
-//					resultPolygon.get(i+1).y);
-//		}
-//		int i = resultPolygon.size()-1;
-//		graphics.drawLine(
-//				resultPolygon.get(i).x,
-//				resultPolygon.get(i).y,
-//				resultPolygon.get(0).x,
-//				resultPolygon.get(0).y);
+		if (renderPoly) {
+			for (int i = 0; i < resultPolygon.size() - 1; i++) {
+				graphics.drawLine(
+						resultPolygon.get(i).x,
+						resultPolygon.get(i).y,
+						resultPolygon.get(i + 1).x,
+						resultPolygon.get(i + 1).y);
+			}
+			int i = resultPolygon.size() - 1;
+			graphics.drawLine(
+					resultPolygon.get(i).x,
+					resultPolygon.get(i).y,
+					resultPolygon.get(0).x,
+					resultPolygon.get(0).y);
+		}
 		
 		//drawing rays
-		for (Point p : resultPolygon) {
-			graphics.drawLine(
-					(int) GameData.playerPos.x,
-					(int) GameData.playerPos.y,
-					p.x, p.y);
+		if (renderRays) {
+			for (Point p : resultPolygon) {
+				graphics.drawLine(
+						(int) GameData.playerPos.x,
+						(int) GameData.playerPos.y,
+						p.x, p.y);
+			}
 		}
 		
 		//drawing player

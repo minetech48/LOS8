@@ -2,6 +2,7 @@ package game;
 
 import engine.ux.GUI;
 import engine.ux.KeyListener;
+import ux.Renderer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +35,20 @@ public class EngineInterface {
 
 class ListenerInterface implements KeyListener {
 	public void keyPressed(String keyText) {
+		//key press handling
+		switch (keyText) {
+			case "J":
+				Renderer.renderSegments = !Renderer.renderSegments;
+				break;
+			case "K":
+				Renderer.renderRays = !Renderer.renderRays;
+				break;
+			case "L":
+				Renderer.renderPoly = !Renderer.renderPoly;
+				break;
+		}
+		
+		//for player movement
 		EngineInterface.keysDown.add(keyText);
 	}
 	
