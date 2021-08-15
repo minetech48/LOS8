@@ -27,6 +27,8 @@ public class GameData {
 			}
 		};
 		
+		addPolygon(400, 400, 6, 50);
+		
 		//initializing environment
 		wallEndpoints.add(new WallEndpoint(0, 0, 800, 0));
 		wallEndpoints.add(new WallEndpoint(800, 0, 800, 800));
@@ -39,6 +41,17 @@ public class GameData {
 		wallEndpoints.add(new WallEndpoint(200, 200, 100, 150));
 		
 		initialized = true;
+	}
+	
+	public static void addPolygon(float x, float y, int sides, int size) {
+		double increment = Math.PI*2/sides;
+		
+		double angle;
+		
+		for (int i = 0; i < sides; i++) {
+			angle = i*increment;
+			wallEndpoints.add(new WallEndpoint((float) Math.cos(angle)*size + x, (float) Math.sin(angle)*size + y, (float) Math.cos(angle+increment)*size + x, (float) Math.sin(angle+increment)*size + y));
+		}
 	}
 	
 	public static void sortEndpoints() {
